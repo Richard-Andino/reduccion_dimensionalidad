@@ -45,139 +45,89 @@ st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=IBM+Plex+Mono:wght@300;400;500;600&display=swap');
 
-html, body,
-[data-testid="stAppViewContainer"],
-[data-testid="stApp"] {
+/* Reset de fondo */
+html, body, [data-testid="stAppViewContainer"] {
     background: #0d0d0d !important;
-    font-family: 'IBM Plex Mono', monospace;
-    color: #f5f0e8;
 }
-[data-testid="stAppViewContainer"] { background: #0d0d0d !important; }
+
+/* Tipografía global */
+* { font-family: 'IBM Plex Mono', monospace !important; }
+h1, .app-title { font-family: 'Cormorant Garamond', serif !important; }
 
 .app-eyebrow {
     text-align: center;
-    color: rgba(232,197,71,0.55);
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.60rem;
-    letter-spacing: 0.28em;
+    color: #e8c547;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
     text-transform: uppercase;
-    margin-bottom: 0.6rem;
+    margin-bottom: 0.5rem;
+    opacity: 0.7;
 }
+
 .app-title {
     text-align: center;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 3.4rem;
+    font-size: 3.2rem;
     font-weight: 700;
     color: #f5f0e8;
-    letter-spacing: -0.02em;
-    line-height: 1;
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.2rem;
 }
+
 .app-title span { color: #e8c547; font-style: italic; }
+
 .app-byline {
     text-align: center;
-    color: rgba(245,240,232,0.28);
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 0.14em;
-    margin-bottom: 0;
+    color: rgba(245,240,232,0.4);
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
 }
+
 .gold-rule {
-    border: none; height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(232,197,71,0.35), transparent);
-    margin: 1.4rem 0;
+    border: none; 
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(232,197,71,0.4), transparent);
+    margin: 2rem 0;
 }
+
 .section-tag {
     display: inline-block;
-    background: #e8c547;
-    color: #0d0d0d;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.56rem;
-    font-weight: 600;
-    letter-spacing: 0.20em;
+    background: rgba(232,197,71,0.1);
+    color: #e8c547;
+    border: 1px solid rgba(232,197,71,0.3);
+    font-size: 0.55rem;
+    letter-spacing: 0.25em;
     text-transform: uppercase;
-    padding: 0.18rem 0.65rem;
-    margin-bottom: 1rem;
+    padding: 0.3rem 0.8rem;
+    margin-bottom: 1.2rem;
 }
-.stRadio > label,
-[data-testid="stRadio"] > label {
-    color: rgba(245,240,232,0.5) !important;
-    font-family: 'IBM Plex Mono', monospace !important;
-    font-size: 0.70rem !important;
-    letter-spacing: 0.08em !important;
-    text-transform: uppercase !important;
-}
-.stRadio [role="radiogroup"] label {
-    color: rgba(245,240,232,0.85) !important;
-    font-family: 'IBM Plex Mono', monospace !important;
-    font-size: 0.80rem !important;
-}
+
+/* Estilos de Botones */
 .stButton > button {
+    background: transparent !important;
+    color: #e8c547 !important;
+    border: 1px solid #e8c547 !important;
+    border-radius: 0 !important;
+    padding: 0.6rem !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.15em !important;
+    text-transform: uppercase !important;
+    transition: all 0.3s ease !important;
+}
+
+.stButton > button:hover {
     background: #e8c547 !important;
     color: #0d0d0d !important;
-    border: none !important;
-    border-radius: 0 !important;
-    padding: 0.75rem 1.5rem !important;
-    font-family: 'IBM Plex Mono', monospace !important;
-    font-weight: 600 !important;
-    font-size: 0.72rem !important;
-    letter-spacing: 0.18em !important;
-    text-transform: uppercase !important;
-    box-shadow: none !important;
-    transition: all 0.15s ease !important;
-    width: 100% !important;
 }
-.stButton > button:hover {
-    background: #f0d360 !important;
-    transform: translateY(-1px) !important;
-    box-shadow: 0 4px 20px rgba(232,197,71,0.2) !important;
+
+/* Ajuste de contenedores y texto */
+[data-testid="stMarkdownContainer"] p {
+    color: rgba(245,240,232,0.8) !important;
 }
-.stExpander {
-    border: 1px solid rgba(232,197,71,0.12) !important;
-    border-radius: 0 !important;
-    background: rgba(232,197,71,0.02) !important;
+
+/* Canvas fix */
+[data-testid="st_canvas"] {
+    border: 1px solid rgba(232,197,71,0.2) !important;
 }
-.stExpander summary {
-    color: rgba(245,240,232,0.5) !important;
-    font-family: 'IBM Plex Mono', monospace !important;
-    font-size: 0.75rem !important;
-}
-[data-testid="stCaptionContainer"] {
-    color: rgba(245,240,232,0.35) !important;
-    font-family: 'IBM Plex Mono', monospace !important;
-    font-size: 0.68rem !important;
-    text-align: center !important;
-    letter-spacing: 0.07em !important;
-}
-.stAlert {
-    background: rgba(232,197,71,0.05) !important;
-    border: 1px solid rgba(232,197,71,0.18) !important;
-    border-radius: 0 !important;
-    color: rgba(245,240,232,0.7) !important;
-    font-family: 'IBM Plex Mono', monospace !important;
-    font-size: 0.78rem !important;
-}
-[data-testid="stImageCaption"] {
-    color: rgba(245,240,232,0.35) !important;
-    font-family: 'IBM Plex Mono', monospace !important;
-    font-size: 0.65rem !important;
-    letter-spacing: 0.07em !important;
-}
-hr[data-testid="stDivider"] { border-color: rgba(232,197,71,0.12) !important; }
-strong { color: #e8c547 !important; font-weight: 600 !important; }
-code, .stCode {
-    background: rgba(232,197,71,0.06) !important;
-    border: 1px solid rgba(232,197,71,0.14) !important;
-    color: #e8c547 !important;
-    font-family: 'IBM Plex Mono', monospace !important;
-    border-radius: 0 !important;
-}
-[data-testid="stMarkdownContainer"] p,
-[data-testid="stMarkdownContainer"] div {
-    color: rgba(245,240,232,0.75);
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.82rem;
-}
+
 </style>
 """, unsafe_allow_html=True)
 

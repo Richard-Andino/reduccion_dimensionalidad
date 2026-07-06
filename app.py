@@ -5,6 +5,7 @@ import joblib
 from pathlib import Path
 from PIL import Image
 
+# Intento de importar el canvas
 try:
     from streamlit_drawable_canvas import st_canvas
     CANVAS_AVAILABLE = True
@@ -12,7 +13,7 @@ except ImportError:
     CANVAS_AVAILABLE = False
 
 # ============================================================
-# CONFIGURACIÓN DE PÁGINA
+# CONFIGURACIÓN
 # ============================================================
 st.set_page_config(
     page_title="MNIST Classifier IA",
@@ -21,33 +22,35 @@ st.set_page_config(
 )
 
 # ============================================================
-# ESTILOS (DISEÑO CLARO)
+# ESTILOS "SOFT DARK" (Legibilidad total)
 # ============================================================
 st.markdown("""
 <style>
-    /* Fondo general */
-    .stApp { background-color: #f8f9fa; }
+    /* Fondo Gris Oscuro Suave */
+    .stApp { background-color: #1e1e2e; }
     
-    /* Títulos y texto */
-    h1, h2, h3 { color: #2d3436 !important; }
+    /* Textos claros */
+    h1, h2, h3, p, label, .stMarkdown { color: #e4e4e7 !important; }
     
-    /* Tarjeta de resultado */
+    /* Tarjeta de resultado con contraste */
     .result-card {
-        background: #ffffff;
+        background: #2d2d44;
         padding: 2rem;
         border-radius: 15px;
         text-align: center;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-        border: 1px solid #e9ecef;
+        border: 1px solid #444466;
         margin: 1.5rem 0;
     }
     
-    /* Botón */
+    /* Ajuste de Canvas */
+    canvas { border: 2px solid #60a5fa !important; border-radius: 8px; }
+    
+    /* Botón principal */
     div.stButton > button {
-        background-color: #1976d2 !important;
-        color: white !important;
+        background-color: #60a5fa !important;
+        color: #1e1e2e !important;
+        font-weight: 700 !important;
         border: none !important;
-        font-weight: 600;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -56,22 +59,22 @@ st.markdown("""
 # MODELOS
 # ============================================================
 MODEL_DIR = Path("models")
-
 @st.cache_resource
 def cargar_modelos():
+    # Asegúrate de que estos archivos estén en la carpeta 'models'
     pca = joblib.load(MODEL_DIR / "pca_mnist.pkl")
     kmeans = joblib.load(MODEL_DIR / "kmeans_mnist.pkl")
-    svm_models = joblib.load(SVM_PATH)
+    svm_models = joblib.load(MODEL_DIR / "svm_mnist.pkl")
     return pca, kmeans, svm_models
 
-# Nota: Asegúrate de tener los archivos .pkl en la carpeta 'models'
+# Descomenta la siguiente línea cuando los modelos estén listos en la carpeta 'models'
 # pca, kmeans, svm_models = cargar_modelos()
 
 # ============================================================
 # HEADER
 # ============================================================
 st.markdown("<h1 style='text-align:center;'>🔢 Clasificador MNIST</h1>", unsafe_allow_html=True)
-st.markdown("<p style='text-align:center; color:#6c757d;'>PCA + KMeans + SVM | Angeles Euceda | 20221930061</p>", unsafe_allow_html=True)
+st.markdown("<p style='text-align:center; color:#a1a1aa;'>PCA + KMeans + SVM | Angeles Euceda | 20221930061</p>", unsafe_allow_html=True)
 st.divider()
 
 # ============================================================
@@ -89,7 +92,7 @@ if modo == "🎲 Ejemplo automático":
     col1, col2, col3 = st.columns([1, 1, 1])
     with col2:
         st.image(img_example, caption="Ejemplo generado", width=150, clamp=True)
-    st.info(f"🎲 Datos aleatorios generados.")
+    st.info("🎲 Datos aleatorios generados.")
 
 else:
     if CANVAS_AVAILABLE:
@@ -97,7 +100,7 @@ else:
         with col1:
             st.markdown("**Dibuja aquí:**")
             canvas_result = st_canvas(
-                fill_color="black", stroke_width=15, stroke_color="white",
+                fill_color="white", stroke_width=15, stroke_color="white",
                 background_color="black", height=280, width=280,
                 drawing_mode="freedraw", key="canvas_dibujo"
             )
@@ -105,35 +108,39 @@ else:
             st.markdown("**Procesado:**")
             if canvas_result.image_data is not None:
                 img = Image.fromarray(canvas_result.image_data.astype('uint8'), 'RGBA')
-                img_28 = img.convert('L').resize((28, 28), Image.Resampling.LANCZOS)
+                img_gray = img.convert('L')
+                img_28 = img_gray.resize((28, 28), Image.Resampling.LANCZOS)
                 sample = np.array(img_28).flatten().astype(float)
                 st.image(img_28, width=150, clamp=True)
                 st.caption(f"Píxeles activos: {(sample > 30).sum()}/784")
             else:
+                st.warning("Dibuja algo 👈")
                 sample = np.zeros(784)
     else:
         st.error("⚠️ `streamlit-drawable-canvas` no está instalado.")
+        sample = np.zeros(784)
 
 # ============================================================
 # PREDICCIÓN
 # ============================================================
 if sample is not None:
     if st.button("🔍 Predecir dígito", type="primary", use_container_width=True):
-        # Descomentar estas líneas cuando los modelos estén cargados:
-        # sample_pca = pca.transform((sample / 255.0).reshape(1, -1))
+        # NORMALIZACIÓN Y PREDICCIÓN
+        # sample_norm = sample / 255.0
+        # sample_pca = pca.transform(sample_norm.reshape(1, -1))
         # pred = svm_models["rbf"].predict(sample_pca)[0]
         # cluster = kmeans.predict(sample_pca)[0]
         
-        # Valores de prueba (simulados)
+        # Valores de prueba mientras los modelos no estén cargados
         pred, cluster = 5, 2
         
         st.divider()
         st.html(f"""
         <div class="result-card">
-            <p style="color: #6c757d; margin: 0;">🎯 Dígito Predicho</p>
-            <p style="font-size: 5rem; font-weight: 800; color: #1976d2; margin: 0;">{pred}</p>
-            <hr style="margin: 1rem 0;">
-            <p style="color: #495057;">Cluster KMeans: <b>{cluster}</b></p>
+            <p style="color: #a1a1aa; margin: 0;">🎯 Dígito Predicho</p>
+            <p style="font-size: 5rem; font-weight: 800; color: #60a5fa; margin: 0; line-height: 1;">{pred}</p>
+            <hr style="border-top: 1px solid #444466; margin: 1rem 0;">
+            <p style="color: #e4e4e7;">Cluster KMeans: <b style="color: #fbbf24;">{cluster}</b></p>
         </div>
         """)
 
@@ -142,4 +149,4 @@ if sample is not None:
             st.write(f"**Predicción:** dígito {pred}, cluster {cluster}")
 
 st.divider()
-st.caption("Desarrollado con ❤️ | 2026")
+st.caption("Desarrollado con ❤️ | MNIST Classifier IA | 2026")

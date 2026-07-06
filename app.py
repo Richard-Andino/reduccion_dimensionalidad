@@ -43,91 +43,76 @@ pca, kmeans, svm_models = cargar_modelos()
 # ============================================================
 st.markdown("""
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=IBM+Plex+Mono:wght@300;400;500;600&display=swap');
-
-/* Reset de fondo */
+/* 1. Reset Global y Estilos de Fuente */
 html, body, [data-testid="stAppViewContainer"] {
     background: #0d0d0d !important;
 }
-
-/* Tipografía global */
 * { font-family: 'IBM Plex Mono', monospace !important; }
-h1, .app-title { font-family: 'Cormorant Garamond', serif !important; }
 
+/* 2. Corrección de Iconos Canvas (¡Importante!) */
+/* Forzamos el color de los botones de la barra de herramientas del canvas */
+div[data-testid="st_canvas"] button {
+    color: #f5f0e8 !important; /* Color del icono */
+    background: rgba(232, 197, 71, 0.1) !important;
+    border: 1px solid rgba(232, 197, 71, 0.2) !important;
+    border-radius: 4px !important;
+}
+/* Asegurar visibilidad de iconos SVG dentro de botones */
+div[data-testid="st_canvas"] button svg {
+    fill: #f5f0e8 !important;
+}
+
+/* 3. Ajustes de Cabecera */
 .app-eyebrow {
-    text-align: center;
-    color: #e8c547;
-    font-size: 0.65rem;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    margin-bottom: 0.5rem;
-    opacity: 0.7;
+    text-align: center; color: #e8c547; font-size: 0.6rem;
+    letter-spacing: 0.3em; text-transform: uppercase; margin-bottom: 0.5rem;
 }
-
 .app-title {
-    text-align: center;
-    font-size: 3.2rem;
-    font-weight: 700;
-    color: #f5f0e8;
-    margin-bottom: 0.2rem;
+    text-align: center; font-family: 'Cormorant Garamond', serif !important;
+    font-size: 3.2rem; font-weight: 700; color: #f5f0e8;
 }
-
 .app-title span { color: #e8c547; font-style: italic; }
 
-.app-byline {
-    text-align: center;
-    color: rgba(245,240,232,0.4);
-    font-size: 0.6rem;
-    letter-spacing: 0.2em;
-}
-
-.gold-rule {
-    border: none; 
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(232,197,71,0.4), transparent);
-    margin: 2rem 0;
-}
-
+/* 4. Estilos de Controles */
 .section-tag {
-    display: inline-block;
-    background: rgba(232,197,71,0.1);
-    color: #e8c547;
-    border: 1px solid rgba(232,197,71,0.3);
-    font-size: 0.55rem;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    padding: 0.3rem 0.8rem;
-    margin-bottom: 1.2rem;
+    display: inline-block; background: rgba(232,197,71,0.1);
+    color: #e8c547; border: 1px solid rgba(232,197,71,0.3);
+    font-size: 0.5rem; letter-spacing: 0.2em;
+    padding: 0.2rem 0.6rem; margin: 1rem 0;
 }
 
-/* Estilos de Botones */
+/* 5. Radio Buttons */
+div[role="radiogroup"] label {
+    color: #f5f0e8 !important;
+}
+
+/* 6. Botones Principales */
 .stButton > button {
     background: transparent !important;
     color: #e8c547 !important;
     border: 1px solid #e8c547 !important;
     border-radius: 0 !important;
-    padding: 0.6rem !important;
-    font-weight: 600 !important;
-    letter-spacing: 0.15em !important;
-    text-transform: uppercase !important;
+    padding: 0.5rem 1rem !important;
+    font-size: 0.7rem !important;
+    letter-spacing: 0.1em !important;
     transition: all 0.3s ease !important;
 }
-
 .stButton > button:hover {
     background: #e8c547 !important;
     color: #0d0d0d !important;
 }
 
-/* Ajuste de contenedores y texto */
-[data-testid="stMarkdownContainer"] p {
-    color: rgba(245,240,232,0.8) !important;
+/* 7. Texto y Métricas */
+[data-testid="stCaptionContainer"] {
+    color: rgba(245,240,232,0.5) !important;
 }
 
-/* Canvas fix */
-[data-testid="st_canvas"] {
-    border: 1px solid rgba(232,197,71,0.2) !important;
+/* 8. Separador */
+.gold-rule {
+    border: none; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(232,197,71,0.3), transparent);
+    margin: 1.5rem 0;
 }
-
 </style>
 """, unsafe_allow_html=True)
 

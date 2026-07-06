@@ -63,7 +63,7 @@ div[data-testid="st_canvas"] button svg {
 }
 /* Cambia el fondo del contenedor principal y el cuerpo de la página */
 [data-testid="stAppViewContainer"], [data-testid="stApp"] {
-    background-color: #121212 !important; /* Gris casi negro */
+    background-color: #fffff !important; /* Gris casi negro */
 }
 /* 3. Ajustes de Cabecera */
 .app-eyebrow {

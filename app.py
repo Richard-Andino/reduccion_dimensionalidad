@@ -17,7 +17,7 @@ except ImportError:
 # ============================================================
 st.set_page_config(
     page_title="MNIST Classifier IA",
-    page_icon="🔢",
+    page_icon="",
     layout="centered"
 )
 
@@ -73,26 +73,26 @@ def cargar_modelos():
 # ============================================================
 # HEADER
 # ============================================================
-st.markdown("<h1 style='text-align:center;'>🔢 Clasificador MNIST</h1>", unsafe_allow_html=True)
-st.markdown("<p style='text-align:center; color:#a1a1aa;'>PCA + KMeans + SVM | Angeles Euceda | 20221930061</p>", unsafe_allow_html=True)
+st.markdown("<h1 style='text-align:center;'>Clasificador MNIST</h1>", unsafe_allow_html=True)
+st.markdown("<p style='text-align:center; color:#a1a1aa;'>Richard Andino - 20231900184</p>", unsafe_allow_html=True)
 st.divider()
 
 # ============================================================
 # INPUT
 # ============================================================
-st.subheader("✏️ Ingresa un dígito")
-modo = st.radio("Modo de entrada", ["🎲 Ejemplo automático", "✏️ Dibujar"], horizontal=True)
+st.subheader("Ingresa un dígito")
+modo = st.radio("Modo de entrada", ["Ejemplo automático", " Dibujar"], horizontal=True)
 
 sample = None
 
-if modo == "🎲 Ejemplo automático":
+if modo == "Ejemplo automático":
     np.random.seed(None)
     sample = np.random.randint(0, 256, size=784).astype(float)
     img_example = sample.reshape(28, 28)
     col1, col2, col3 = st.columns([1, 1, 1])
     with col2:
         st.image(img_example, caption="Ejemplo generado", width=150, clamp=True)
-    st.info("🎲 Datos aleatorios generados.")
+    st.info("Datos aleatorios generados.")
 
 else:
     if CANVAS_AVAILABLE:
@@ -114,7 +114,7 @@ else:
                 st.image(img_28, width=150, clamp=True)
                 st.caption(f"Píxeles activos: {(sample > 30).sum()}/784")
             else:
-                st.warning("Dibuja algo 👈")
+                st.warning("Dibuja algo ")
                 sample = np.zeros(784)
     else:
         st.error("⚠️ `streamlit-drawable-canvas` no está instalado.")
@@ -124,7 +124,7 @@ else:
 # PREDICCIÓN
 # ============================================================
 if sample is not None:
-    if st.button("🔍 Predecir dígito", type="primary", use_container_width=True):
+    if st.button(" Predecir dígito", type="primary", use_container_width=True):
         # NORMALIZACIÓN Y PREDICCIÓN
         # sample_norm = sample / 255.0
         # sample_pca = pca.transform(sample_norm.reshape(1, -1))
@@ -137,7 +137,7 @@ if sample is not None:
         st.divider()
         st.html(f"""
         <div class="result-card">
-            <p style="color: #a1a1aa; margin: 0;">🎯 Dígito Predicho</p>
+            <p style="color: #a1a1aa; margin: 0;">Dígito Predicho</p>
             <p style="font-size: 5rem; font-weight: 800; color: #60a5fa; margin: 0; line-height: 1;">{pred}</p>
             <hr style="border-top: 1px solid #444466; margin: 1rem 0;">
             <p style="color: #e4e4e7;">Cluster KMeans: <b style="color: #fbbf24;">{cluster}</b></p>
@@ -149,4 +149,4 @@ if sample is not None:
             st.write(f"**Predicción:** dígito {pred}, cluster {cluster}")
 
 st.divider()
-st.caption("Desarrollado con ❤️ | MNIST Classifier IA | 2026")
+st.caption("")
